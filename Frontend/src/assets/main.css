@@ -1,0 +1,102 @@
+/* Osnova */
+body {
+    background-color: #050505 !important;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+/* Nav Bar */
+.moj-nav {
+    background: rgba(10, 10, 10, 0.8) !important;
+    backdrop-filter: blur(12px);
+    /* Ovo pravi moderan "stakleni" efekat */
+
+    /* Umesto oštre linije, koristi gradijent koji bledi ka krajevima */
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right,
+            transparent,
+            rgba(0, 255, 149, 0.3),
+            transparent) 1;
+
+    padding: 15px 0;
+    transition: all 0.3s ease;
+
+}
+
+.nav-sadrzaj {
+    display: flex;
+    justify-content: space-around;
+    /* Raspoređuje elemente ravnomerno */
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: large;
+}
+
+/* Logo */
+.nav-brand {
+    color: #00ff95;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Lista linkova */
+.nav-lista {
+    display: flex;
+    gap: 20px;
+    /* Razmak između stavki menija */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.stavka {
+    display: flex;
+    align-items: center;
+}
+
+/* REŠENJE ZA BOJU I BLIZINU */
+.link-tekst {
+    color: #00ff95;
+    text-decoration: none;
+}
+
+.stavka i {
+    color: #00ff95;
+    margin-left: 3px;
+    /* IKONICA JE SADA SKROZ UZ TEKST */
+    font-size: 0.9rem;
+}
+
+/* HOVER */
+.stavka:hover .link-tekst,
+.stavka:hover i,
+.nav-brand:hover {
+    color: #fff;
+}
+
+/* Search */
+.search-box input {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #00ff95;
+    padding: 5px;
+}
+
+.search-box button {
+    border: 1px solid #00ff95;
+    background: transparent;
+    color: #00ff95;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    color: #00ff95;
+    padding: 20px;
+}

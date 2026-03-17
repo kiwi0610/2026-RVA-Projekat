@@ -1,0 +1,87 @@
+/* --- LOG.CSS (LOGIN & REGISTER STILOVI) --- */
+
+/* Glavni kontejner koji centrirano drži formu na sredini ekrana */
+.auth-container {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #050505; 
+}
+
+/* Kartica u kojoj se nalazi forma */
+.auth-card {
+  background: #0f0f0f;
+  border: 1px solid #1a1a1a;
+  padding: 40px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Šira verzija kartice - koristi je za Register/Sign In jer ima više polja */
+.wide-card {
+  max-width: 650px;
+}
+
+/* Naslovi sa zelenim sjajem */
+.glow-text {
+  text-shadow: 0 0 15px rgba(0, 255, 149, 0.5);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Stilovi za input polja */
+.custom-input {
+  background-color: #050505 !important;
+  border: 1px solid #222 !important;
+  color: white !important;
+  padding: 12px;
+  transition: 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: #00ff95 !important;
+  box-shadow: 0 0 10px rgba(0, 255, 149, 0.2);
+  outline: none;
+}
+
+/* Glavno dugme za akciju */
+.btn-fit-green {
+  background-color: #00ff95;
+  color: black;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 12px;
+  border: none;
+  transition: 0.3s;
+  text-transform: uppercase;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-fit-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 149, 0.4);
+  background-color: #00e686;
+}
+
+/* Dodatni tekstovi i linkovi (npr. "Nemate nalog?") */
+.auth-footer-text {
+  margin-top: 20px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.auth-footer-text a {
+  color: #00ff95;
+  text-decoration: none;
+}
+
+.auth-footer-text a:hover {
+  text-decoration: underline;
+}
