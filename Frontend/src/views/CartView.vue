@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 
+const route = useRoute();
 const router = useRouter();
 const cartItems = ref<any[]>([]);
 
 const getCartKey = () => {
-    const user = localStorage.getItem('user');
-    if (user) {
-        const userData = JSON.parse(user);
-        return `cart_${userData.username}`;
-    }
-    return 'cart_guest';
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return 'cart_guest';
+    const userData = JSON.parse(userStr);
+    const idKey = userData?.username || userData?.email || userData?.id;
+    return idKey ? `cart_${idKey}` : 'cart_guest';
 };
 
 const ucitajKorpu = () => {
@@ -21,6 +21,7 @@ const ucitajKorpu = () => {
 };
 
 onMounted(() => ucitajKorpu());
+watch(() => route.fullPath, () => ucitajKorpu());
 
 const totalSum = computed(() => {
     return cartItems.value.reduce((acc, item) => acc + (item.price * item.quantity), 0);
@@ -41,6 +42,7 @@ const zavrsiPorudbinu = async () => {
     const userStr = localStorage.getItem('user');
     if (!userStr) {
         alert("Morate biti ulogovani!");
+        router.push('/login');
         return;
     }
 
@@ -50,14 +52,14 @@ const zavrsiPorudbinu = async () => {
         userId: user.id,
         totalPrice: totalSum.value,
         items: cartItems.value.map(item => ({
-            itemId: item.id,   
+            itemId: item.id,
             amount: item.quantity,
             price: item.price
         }))
     };
 
     try {
-        const response = await axios.post('http://localhost:8080/api/orders', orderData);
+        await axios.post('http://localhost:8080/api/orders', orderData);
         alert('Porudžbina uspešna!');
         cartItems.value = [];
         saveCart();
@@ -66,12 +68,12 @@ const zavrsiPorudbinu = async () => {
         alert("Došlo je do greške prilikom čuvanja porudžbine.");
     }
 };
-
 </script>
 
 <template>
     <div class="container mt-5">
-        <h2 class="text-white text-uppercase mb-4">Vaša Korpa <i class="fa-solid fa-cart-shopping text-success"></i>
+        <h2 class="text-white text-uppercase mb-4">
+            Vaša Korpa <i class="fa-solid fa-cart-shopping text-success"></i>
         </h2>
 
         <div v-if="cartItems.length > 0" class="bg-dark p-4 rounded shadow border border-secondary">
@@ -100,8 +102,11 @@ const zavrsiPorudbinu = async () => {
                                 </div>
                             </td>
                             <td class="text-success fw-bold">{{ item.price * item.quantity }} RSD</td>
-                            <td><button class="btn btn-outline-danger btn-sm" @click="removeFromCart(item.id)"><i
-                                        class="fa-solid fa-trash"></i></button></td>
+                            <td>
+                                <button class="btn btn-outline-danger btn-sm" @click="removeFromCart(item.id)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,8 +117,7 @@ const zavrsiPorudbinu = async () => {
                 <div class="text-end text-white">
                     <h5 class="text-secondary small text-uppercase">Ukupno za uplatu:</h5>
                     <h2 class="text-success fw-bold">{{ totalSum }} RSD</h2>
-                    <button class="btn btn-success px-5 mt-2 fw-bold" @click="zavrsiPorudbinu">ZAVRŠI
-                        PORUDŽBINU</button>
+                    <button class="btn btn-success px-5 mt-2 fw-bold" @click="zavrsiPorudbinu">ZAVRŠI PORUDŽBINU</button>
                 </div>
             </div>
         </div>
